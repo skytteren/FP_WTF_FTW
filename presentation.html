@@ -1,0 +1,370 @@
+<!DOCTYPE html>  
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>FP: WTF =&gt; FTW</title>
+
+		<meta name="description" content="En introduksjon til funksjonell programmering">
+		<meta name="author" content="Stein Kåre Skytteren">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/theme/sk.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/idea.css">
+
+		<script>
+			// If the query includes 'print-pdf' we'll use the PDF print sheet
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+</head>
+<body>
+	<div class="reveal">
+		<div class="state-background"></div>
+    <div class="slides"> 
+				<section>
+					<h1 class="singleline head">FP: WTF =&gt; FTW</h1>
+				</section>
+				<section>
+					<h1 class="head">Stein Kåre Skytteren</h1>
+					<p>@skskytteren</p>
+					<p>@scalaBin</p>
+				</section>
+				<section>
+					<h1>Funksjonell programmering</h1>
+				</section>
+				<section>
+					<h1>Hva?</h1>
+						<h3 class="fragment">Høyereordens funksjoner</h3>
+						<h3 class="fragment">Partial applied og currying</h3>
+						<h3 class="fragment">Rekursjon</h3>
+						<h3 class="fragment">Lazy vs eager evaluation</h3>
+						<h3 class="fragment">Rene funksjoner</h3>
+					</section>
+				</section>
+				<section class="def">
+					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						In computer science, functional programming is a programming paradigm that treats computation as the evaluation of 
+						<b>mathematical functions</b> and <b>avoids state and mutable data</b>.
+					</blockquote>
+					<div class="source">- Wikipedia</div>
+				</section>
+				<section>
+					<h1>Null Side-effekter</h1>
+						<h3 class="fragment">Ikke oppdatere en variabel</h3>
+						<h3 class="fragment">Ikke oppdatere en referte datastruktur</h3>
+						<h3 class="fragment">NoException</h3>
+						<h3 class="fragment">Ikke lese eller skrive til konsoll</h3>
+						<h3 class="fragment">Ikke lese eller skrive til fil</h3>
+						<h3 class="fragment">Ikke skrive til skjerm</h3>
+				</section>
+				<section>
+					<h1>Hvor kommer dette fra?</h1>
+				</section>
+				<section>
+					<h1>λ</h1>
+					<section></section>
+					<section>
+						<h2>1930</h2>
+					</section>
+					<section class="def">
+						<blockquote>λ-calculus is a formal system in mathematical logic for expressing computation by way of variable binding and substitution.</blockquote>
+						<div class="source">- Wikipedia</div>
+					</section>
+					<section>
+						<h3>annonyme funksjoner</h3>
+					</section>
+				</section>
+				<section>
+					<h1>Hvorfor?</h1>
+				</section>
+				<section>
+						<h1>Extremt gunstig</h1>
+						<h3 class="fragment">Modularitet</h3>
+						<h3 class="fragment">Testbarhet</h3>
+						<h3 class="fragment">Gjennbruk</h3>
+						<h3 class="fragment">Parallellisering</h3>
+						<h3 class="fragment">Generalising</h3>
+						<h3 class="fragment">Gjennbruk</h3>
+						
+				</section>
+				<section>
+					<h1>Hvordan ser det ut?</h1>
+					<h2 class="fragment">Math.abs(in: Int): Int</h2>
+				</section>
+				<section>
+					<h2>Programmering</h2>
+					<h1>!=</h1>
+					<h2>Matematikk</h2>
+					<section></section>
+					<section>
+						<h3>Feil (feilhåndtering)</h3>
+					</section>
+					<section>
+						<h3>Avhengighet til andre data, konfigurasjon</h3>
+					</section>
+					<section>
+						<h3>Usikkerhet (ikke deterministisk)</h3>
+					</section>
+					<section>
+						<h3>Permanente endringer</h3>
+					</section>
+				</section>
+				<section>
+					<h1>Hvordan?</h1>
+				</section>
+				<section>
+					<h1>Category theory</h1>
+					<section></section>				
+					<section>
+						<h2>1940</h2>
+					</section>
+					<section>
+						<blockquote>Category theory is an area of study in mathematics that examines in an abstract way the properties of particular mathematical concepts, by formalising them as collections of objects and arrows, where these collections
+							satisfy some basic conditions.</blockquote>
+						<div>-Wikipedia</div>
+					</section>
+				</section>
+				<section>
+					<h1>Funksjonelle design patterns</h1>
+				</section>
+				<section>
+					<h1>Identity</h1>
+					<pre><code class="scala" contenteditable="true">
+trait Identity[U] {
+	def identity:U
+}					
+					</code></pre>
+				</section>
+				<section>
+					<h1>Semigroup</h1>
+					<pre><code class="scala" contenteditable="true">
+trait Semigroup {
+	def append: (A,A) =&gt; A
+}
+					</code></pre>
+				</section>
+				<section>
+					<h1>Monoid</h1>
+					<section></section>
+					<section class="def">
+						<blockquote>In abstract algebra, a branch of mathematics, a monoid is an algebraic <b>structure</b> with a single associative <b>binary operation</b> and an <b>identity</b> element.</blockquote>
+						<div class="source">-Wikipedia</div>
+					</section>
+					<section>
+						<p>Container[A]</p>
+						<p>identity:A</p>
+						<p>append: (A,A) =&gt; A</p>
+					</section>
+					<section>
+						<pre><code class="scala" contenteditable="true">
+trait Monid[A]{
+	val identity: A
+	def append(A, A): A
+}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code class="scala" contenteditable="true">
+trait Monoid[I] extends Semigroup[I] with Indentity[I]
+						</code></pre>
+					</section>
+					<section>
+						<h2>AdditionMonoid</h2>
+						<pre><code class="scala" contenteditable="true">
+object AdditionMonoid extends Monoid[Int]{
+	val identity = 0 
+	def append(a: Int, b: Int) = a + b
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>MultiplyMonoidInt</h2>
+						<pre><code class="scala" contenteditable="true">
+object MultiplyMonoid extends Monoid[Int]{
+	val identity = 1 
+	def append(a: Int, b: Int) = a * b
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>StringMonoid</h2>
+						<pre><code class="scala" contenteditable="true">
+object StringMonoid extends Monoid[String]{
+	val identity = ""
+	def append(a: String, b: String) = a + b
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>Bruk av Monoid</h2>
+					</section>
+					<section>
+						<h2>Listealgebra</h2>
+						<pre><code class="scala" contenteditable="true">
+def reduce(l: List[A], m:Monoid[A]):A = {
+	l match{
+		case Nil =&gt; m.identity
+		case x :: xs =&gt; m.append(reduce(sx))
+	}
+}
+						</code></pre>
+						<pre class="fragment"><code class="scala" contenteditable="true">def reduce[A](l: List[A], identity: A, append: (A, A) =&gt; A): A</code></pre>
+					</section>
+					<section>
+						<h2>List[A]</h2>
+						<pre class="fragment"><code class="scala" contenteditable="true">def foldLeft[A](identity: A, append: (A, A) =&gt; A): A</code></pre>
+						<pre class="fragment"><code class="scala" contenteditable="true">def foldLeft[A](identity: A)(append: (A, A) =&gt; A): A</code></pre>
+					</section>
+				</section>
+				<section>
+					<h1>Functor</h1>
+					<section></section>
+					<section>
+						<blockquote>Functors can be thought of as <b>homomorphisms between categories</b>, or morphisms when in the category of small categories.</blockquote>
+						<div class="source">-Wikipedia</div>
+					</section>
+					<section>
+						<p>(A=&gt;B) =&gt; (C[A]=&gt;C[B])</p>
+						<p class="fragment">(A=&gt;B) =&gt; C[A] =&gt; C[B]</p>
+						<p class="fragment">C[A] =&gt; (A=&gt;B) =&gt; C[B]</p>
+						<pre class="fragment"><code class="scala" contenteditable="true">def map[A,B](l: List[A], f: A =&gt; B): List[B]</code></pre>
+						<pre class="fragment"><code class="scala" contenteditable="true">def map[A,B](l: List[A])(f: A =&gt; B): List[B]</code></pre>
+					</section>
+					<section>
+						<h3>List[A]</h3>
+						<pre><code class="scala" contenteditable="true">def map[B](f: A =&gt; B):List[B]</code></pre>
+					</section>
+					<section>
+						<h3>List[A] => Oppgave</h3>
+						<pre><code class="scala" contenteditable="true">
+case class Person(name: String)
+
+val persons: List[Person] //
+
+// Gi meg alle navnene?
+						</code></pre>
+					</section>
+				</section>
+				<!-- section>
+					<h1>Applicative functors</h1>
+					<p class="fragment">(C[A=&gt;B])=&gt;(C[A]=&gt;C[B])</p>
+					<p class="fragment">C[A]=&gt;C[A=&gt;B]=&gt;C[B]</p>
+				</section -->
+				<section>
+					<div class="singleline">Monad</div>
+					<section></section>
+					<section class="def">
+						<blockquote>Formally, a monad consists of a type constructor M and two operations, bind and return.</blockquote>
+						<div class="source">-Wikipedia</div>
+					</section>
+					<section>
+						<h1>Monad</h1>
+						<p>( A=&gt;C[B] ) =&gt; ( C[A] =&gt; C[B] )</p>
+						<p>C[A] =&gt; ( A=&gt;C[B] ) =&gt; C[B]</p>
+						<pre><code class="scala" contenteditable="true">def bind[C[_],A,B](m:C[A], f:A=&gt;C[B]):C[B]</code></pre>
+						<pre><code class="scala" contenteditable="true">Thing[A](init:A)</code></pre>
+						<pre><code class="scala" contenteditable="true">def flatMap[B](f:A=&gt;Thing[B]): Thing[B]</code></pre>
+						<pre><code class="scala" contenteditable="true">
+							class Thing[A](init:A){
+								def flatMap[B](f: A=&gt; Thing[B]):Thing[B] = f(init)
+							}
+						</code></pre>
+						<pre><code class="scala" contenteditable="true">new Thing(5).flatMap(i =&gt; new Thing(i+1))</code></pre>
+					</section>
+					<section>
+						<h2>Option[O]</h2>
+						<pre><code class="scala" contenteditable="true">
+							trait Option[A]{
+								def flatMap[B](f: A =&gt; Option[B]): Option[B]
+							}
+						</code></pre>
+						<pre><code class="scala" contenteditable="true">
+							class Some[A](init: A) extends Option[A]{
+								def flatMap[B](f: A =&gt; Option[B]): Option[B] = f(init)
+							}
+						</code></pre>
+						<pre><code class="scala" contenteditable="true">
+							object None extends Option[Nothing]{
+								def flatMap[_](f: A=&gt;Option[B]) = None
+							}
+						</code></pre>
+						<pre><code class="scala" contenteditable="true">
+							val opt: Option[Int] = //
+							opt.flatMap(i =&gt; {
+									if(i &gt; 5) Some(i + 2) else None
+								}).flatMap(i =&gt; Some(i + 2))
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<h1>Eksempler</h1>
+						<h2>Option</h2>
+						<h2>Colletions</h2>
+						<h2>Validering</h2>
+						<h2>IO</h2>
+					</section>
+				</section>
+				<section>
+					<h1>Hvem har brukt en Monad?</h1>
+					<p>jQuery</p>
+				</section>
+				<section>
+					<pre><code class="scala" contenteditable="true">$(“#id”).parent().text(“”).fadeOut();</code></pre>
+				</section>
+				<section>
+					<p>Hva med IO?</p>
+				</section>
+				<section>
+					<h1 class="singleline head">?</h1>
+				</section>
+			</div>
+			<!-- The navigational controls UI -->
+			<aside class="controls">
+				<a class="left" href="#">&#x25C4;</a>
+				<a class="right" href="#">&#x25BA;</a>
+				<a class="up" href="#">&#x25B2;</a>
+				<a class="down" href="#">&#x25BC;</a>
+			</aside>
+
+			<!-- Presentation progress bar -->
+			<div class="progress"><span></span></div>
+		</div>
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/linear(2d)
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/highlight.pack.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+				]
+			});
+
+		</script>
+</body>
+</html>
