@@ -237,6 +237,7 @@ def reduce(l: List[A], m:Monoid[A]):A = {
 						<div class="source">-Wikipedia</div>
 					</section>
 					<section>
+						<p>A =&gt; (C[A])</p>
 						<p>(A=&gt;B) =&gt; (C[A]=&gt;C[B])</p>
 						<p class="fragment">(A=&gt;B) =&gt; C[A] =&gt; C[B]</p>
 						<p class="fragment">C[A] =&gt; (A=&gt;B) =&gt; C[B]</p>
@@ -264,25 +265,26 @@ val persons: List[Person] //
 					<p class="fragment">C[A]=&gt;C[A=&gt;B]=&gt;C[B]</p>
 				</section -->
 				<section>
-					<div class="singleline">Monad</div>
+					<h1>Monad</h1>
 					<section></section>
 					<section class="def">
 						<blockquote>Formally, a monad consists of a type constructor M and two operations, bind and return.</blockquote>
 						<div class="source">-Wikipedia</div>
 					</section>
 					<section>
-						<h1>Monad</h1>
+						<p>A =&gt; C[A]</p>
 						<p>( A=&gt;C[B] ) =&gt; ( C[A] =&gt; C[B] )</p>
-						<p>C[A] =&gt; ( A=&gt;C[B] ) =&gt; C[B]</p>
-						<pre><code class="scala" contenteditable="true">def bind[C[_],A,B](m:C[A], f:A=&gt;C[B]):C[B]</code></pre>
-						<pre><code class="scala" contenteditable="true">Thing[A](init:A)</code></pre>
-						<pre><code class="scala" contenteditable="true">def flatMap[B](f:A=&gt;Thing[B]): Thing[B]</code></pre>
-						<pre><code class="scala" contenteditable="true">
-							class Thing[A](init:A){
-								def flatMap[B](f: A=&gt; Thing[B]):Thing[B] = f(init)
-							}
+						<p class="fragment">( A=&gt;C[B] ) =&gt; C[A] =&gt; C[B]</p>
+						<p class="fragment">C[A] =&gt; ( A=&gt;C[B] ) =&gt; C[B]</p>
+						<pre class="fragment"><code class="scala" contenteditable="true">def bind[C[_],A,B](m:C[A], f:A=&gt;C[B]):C[B]</code></pre>
+						<pre class="fragment"><code class="scala" contenteditable="true">Thing[A](init:A)</code></pre>
+						<pre class="fragment"><code class="scala" contenteditable="true">def flatMap[B](f:A=&gt;Thing[B]): Thing[B]</code></pre>
+						<pre class="fragment"><code class="scala" contenteditable="true">
+class Thing[A](init:A){
+	def flatMap[B](f: A=&gt; Thing[B]):Thing[B] = f(init)	
+}
 						</code></pre>
-						<pre><code class="scala" contenteditable="true">new Thing(5).flatMap(i =&gt; new Thing(i+1))</code></pre>
+						<pre class="fragment"><code class="scala" contenteditable="true">new Thing(5).flatMap(i =&gt; new Thing(i+1))</code></pre>
 					</section>
 					<section>
 						<h2>Option[O]</h2>
