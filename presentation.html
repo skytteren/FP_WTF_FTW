@@ -277,11 +277,11 @@ val persons: List[Person] //
 						<p class="fragment">( A=&gt;C[B] ) =&gt; C[A] =&gt; C[B]</p>
 						<p class="fragment">C[A] =&gt; ( A=&gt;C[B] ) =&gt; C[B]</p>
 						<pre class="fragment"><code class="scala" contenteditable="true">def bind[C[_],A,B](m:C[A], f:A=&gt;C[B]):C[B]</code></pre>
-						<pre class="fragment"><code class="scala" contenteditable="true">Thing[A](init:A)</code></pre>
-						<pre class="fragment"><code class="scala" contenteditable="true">def flatMap[B](f:A=&gt;Thing[B]): Thing[B]</code></pre>
-						<pre class="fragment"><code class="scala" contenteditable="true">
+					</section>
+					<section>
+						<pre><code class="scala" contenteditable="true">
 class Thing[A](init:A){
-	def flatMap[B](f: A=&gt; Thing[B]):Thing[B] = f(init)	
+	def flatMap[B](f: A=&gt; Thing[B]):Thing[B] // TODO implementer?	
 }
 						</code></pre>
 						<pre class="fragment"><code class="scala" contenteditable="true">new Thing(5).flatMap(i =&gt; new Thing(i+1))</code></pre>
@@ -289,48 +289,41 @@ class Thing[A](init:A){
 					<section>
 						<h2>Option[O]</h2>
 						<pre><code class="scala" contenteditable="true">
-							trait Option[A]{
-								def flatMap[B](f: A =&gt; Option[B]): Option[B]
-							}
+trait Option[A]{
+	def flatMap[B](f: A =&gt; Option[B]): Option[B]
+}
+class Some[A](init: A) extends Option[A]{
+	def flatMap[B](f: A =&gt; Option[B]): Option[B] = f(init)
+}
+object None extends Option[Nothing]{
+	def flatMap[_](f: A=&gt;Option[B]) = None
+}
 						</code></pre>
 						<pre><code class="scala" contenteditable="true">
-							class Some[A](init: A) extends Option[A]{
-								def flatMap[B](f: A =&gt; Option[B]): Option[B] = f(init)
-							}
-						</code></pre>
-						<pre><code class="scala" contenteditable="true">
-							object None extends Option[Nothing]{
-								def flatMap[_](f: A=&gt;Option[B]) = None
-							}
-						</code></pre>
-						<pre><code class="scala" contenteditable="true">
-							val opt: Option[Int] = //
-							opt.flatMap(i =&gt; {
-									if(i &gt; 5) Some(i + 2) else None
-								}).flatMap(i =&gt; Some(i + 2))
+val opt: Option[Int] = //
+opt.flatMap(i =&gt; {
+	if(i &gt; 5) Some(i + 2) else None
+}).flatMap(i =&gt; Some(i + 2))
 						</code></pre>
 					</section>
 				</section>
 				<section>
 					<h1>Eksempler</h1>
-						<h2>Option</h2>
-						<h2>Colletions</h2>
-						<h2>Validering</h2>
-						<h2>IO</h2>
-					</section>
+					<h2 class="fragment">Option</h2>
+					<h2 class="fragment">Colletions</h2>
+					<h2 class="fragment">Validering</h2>
+					<h2 class="fragment">IO</h2>
 				</section>
 				<section>
 					<h1>Hvem har brukt en Monad?</h1>
-					<p>jQuery</p>
+					<h2 class="fragment">jQuery</h2>
+					<pre class="fragment"><code class="javascript" contenteditable="true">$("#id").parent().text("").fadeOut();</code></pre>
 				</section>
 				<section>
-					<pre><code class="scala" contenteditable="true">$(“#id”).parent().text(“”).fadeOut();</code></pre>
+					<h1>Hva med IO?</h1>
 				</section>
 				<section>
-					<p>Hva med IO?</p>
-				</section>
-				<section>
-					<h1 class="singleline head">?</h1>
+					<h1>?</h1>
 				</section>
 			</div>
 			<!-- The navigational controls UI -->
