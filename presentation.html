@@ -47,11 +47,37 @@
 				</section>
 				<section>
 					<h1>Hva?</h1>
-						<h3 class="fragment">Høyereordens funksjoner</h3>
-						<h3 class="fragment">Partial applied og currying</h3>
-						<h3 class="fragment">Rekursjon</h3>
-						<h3 class="fragment">Lazy vs eager evaluation</h3>
-						<h3 class="fragment">Rene funksjoner</h3>
+					<h3 class="fragment">Høyereordens funksjoner</h3>
+					<h3 class="fragment">Partial applied og currying</h3>
+					<h3 class="fragment">Rekursjon</h3>
+					<h3 class="fragment">Lazy vs eager evaluation</h3>
+					<h3 class="fragment">Rene funksjoner</h3>
+				</section>
+				<section>
+					<h1>Hvor kommer dette fra?</h1>
+				</section>
+				<section>
+					<h1>λ</h1>
+					<section></section>
+					<section>
+						<h2>1930</h2>
+					</section>
+					<section class="def">
+						<blockquote>λ-calculus is a formal system in mathematical logic for expressing computation by way of variable binding and substitution.</blockquote>
+						<div class="source">- Wikipedia</div>
+					</section>
+					<section>
+						<h3>annonyme funksjoner</h3>
+					</section>
+					<section>
+						<h2>1950</h2>
+					</section>
+					<section>
+						<h2>Lisp</h2>
+					</section>
+					<section>
+						<p>Common Lisp, Scheme,ISLISP, Clojure, Racket, Erlang, OCaml, Haskell, Scala &amp; F#</p>
+						<p>-Wikipedia</p>
 					</section>
 				</section>
 				<section class="def">
@@ -71,23 +97,6 @@
 						<h3 class="fragment">Ikke skrive til skjerm</h3>
 				</section>
 				<section>
-					<h1>Hvor kommer dette fra?</h1>
-				</section>
-				<section>
-					<h1>λ</h1>
-					<section></section>
-					<section>
-						<h2>1930</h2>
-					</section>
-					<section class="def">
-						<blockquote>λ-calculus is a formal system in mathematical logic for expressing computation by way of variable binding and substitution.</blockquote>
-						<div class="source">- Wikipedia</div>
-					</section>
-					<section>
-						<h3>annonyme funksjoner</h3>
-					</section>
-				</section>
-				<section>
 					<h1>Hvorfor?</h1>
 				</section>
 				<section>
@@ -98,7 +107,6 @@
 						<h3 class="fragment">Parallellisering</h3>
 						<h3 class="fragment">Generalising</h3>
 						<h3 class="fragment">Gjennbruk</h3>
-						
 				</section>
 				<section>
 					<h1>Hvordan ser det ut?</h1>
@@ -249,7 +257,7 @@ def reduce(l: List[A], m:Monoid[A]):A = {
 						<pre><code class="scala" contenteditable="true">def map[B](f: A =&gt; B):List[B]</code></pre>
 					</section>
 					<section>
-						<h3>List[A] => Oppgave</h3>
+						<h3>List[A] =&gt; Oppgave</h3>
 						<pre><code class="scala" contenteditable="true">
 case class Person(name: String)
 
@@ -272,6 +280,15 @@ val persons: List[Person] //
 						<div class="source">-Wikipedia</div>
 					</section>
 					<section>
+						<blockquote>Eugenio Moggi first described the general use of monads to structure programs in 1991. 
+						Several people built on his work, including programming language researchers Philip Wadler and Simon Peyton Jones 
+						(Haskell)</blockquote>
+						<div class="source">-Wikipedia</div>
+					</section>
+					<section>
+						<p>Haskell, Scheme, Perl, Racket, Clojure &amp; Scala</p>
+					</section>
+					<section>
 						<p>A =&gt; C[A]</p>
 						<p>( A=&gt;C[B] ) =&gt; ( C[A] =&gt; C[B] )</p>
 						<p class="fragment">( A=&gt;C[B] ) =&gt; C[A] =&gt; C[B]</p>
@@ -286,8 +303,19 @@ class Thing[A](init:A){
 						</code></pre>
 						<pre class="fragment"><code class="scala" contenteditable="true">new Thing(5).flatMap(i =&gt; new Thing(i+1))</code></pre>
 					</section>
+				</section>
+				<section>
+					<h1>Hvem har brukt en Monad?</h1>
+					<h2 class="fragment">jQuery</h2>
+					<pre class="fragment"><code class="javascript" contenteditable="true">$("#id").parent().text("").fadeOut();</code></pre>
+				</section>
+				<section>
+					<h1>Eksempler</h1>
+				</section>
+				<section>
+					<h1>Option</h1>
+					<section></section>
 					<section>
-						<h2>Option[O]</h2>
 						<pre><code class="scala" contenteditable="true">
 trait Option[A]{
 	def flatMap[B](f: A =&gt; Option[B]): Option[B]
@@ -299,28 +327,94 @@ object None extends Option[Nothing]{
 	def flatMap[_](f: A=&gt;Option[B]) = None
 }
 						</code></pre>
+					</section>
+					<section>
 						<pre><code class="scala" contenteditable="true">
-val opt: Option[Int] = //
-opt.flatMap(i =&gt; {
-	if(i &gt; 5) Some(i + 2) else None
-}).flatMap(i =&gt; Some(i + 2))
+case class Person(navn: String, partner: Option[Person])
+val person: Option[Person] = //
+val partner: Option = //TODO
 						</code></pre>
 					</section>
 				</section>
 				<section>
-					<h1>Eksempler</h1>
-					<h2 class="fragment">Option</h2>
-					<h2 class="fragment">Colletions</h2>
-					<h2 class="fragment">Validering</h2>
-					<h2 class="fragment">IO</h2>
+					<h1>Colletions</h1>
+					<section></section>
+					<section>
+						<pre><code class="scala" contenteditable="true">
+case class Person(navn: String, barn: List[Person])
+val personer:List[Person] = new List(
+	Person(navn = "Per", barn = List(Person("Petrine"))), 
+	Person(navn = "Oskar", barn = List()),
+	Person(navn = "Oda", barn = List(Person("Finn")))
+)
+val children: List[Person] = // implement
+val chilrname: List[String] = // implement
+						</code></pre>
+					</section>
 				</section>
 				<section>
-					<h1>Hvem har brukt en Monad?</h1>
-					<h2 class="fragment">jQuery</h2>
-					<pre class="fragment"><code class="javascript" contenteditable="true">$("#id").parent().text("").fadeOut();</code></pre>
+					<h1>Validering</h1>
+					<section></section>
+					<section>
+						<pre><code class="scala" contenteditable="true">
+trait Validation[E, A]{
+  /*...*/
+  def flatMap[EE &gt;: E, B](f: A =&gt; Validation[EE, B]): Validation[EE, B] = this match {
+    case Success(a) =&gt; f(a)
+    case Failure(e) =&gt; Failure(e)
+  }
+}
+case class Success[E, A](a: A) extends Validation[E, A]
+case class Failure[E, A](e: E) extends Validation[E, A]
+						</code></pre>
+ 					</section>
+ 					<section>
+ 						<pre><code class="scala" contenteditable="true">
+def validateAge(in: Int): Validation[String, Int] {
+	if(in &gt;= 0) Success[String](in)
+	else Failure("Må ha en positiv alder")
+}
+						</code></pre>
+ 					</section>
+ 					<section>
+ 						<pre><code class="scala" contenteditable="true">
+trait InputHandler[T]{
+  type ValidationNEL[A,E] = Validation[NonEmptyList[A], E]
+  def input(in: String): ValidationNEL[ValidationError, T] = {
+    // TODO
+  }	
+  def mandatory(in: String): ValidationNEL[ValidationError, String] 
+  def convert(in: String): ValidationNEL[ValidationError, T]
+  def validate(in: T): ValidationNEL[ValidationError, T]
+}
+						</code></pre>
+ 					</section>	
 				</section>
 				<section>
-					<h1>Hva med IO?</h1>
+					<h1>IO</h1>
+					<section>
+						<p>Hvordan skrive rene funksjoner som håndterer side effekter?</p>
+					</section>
+					<section>
+						<p>
+							Funksjonene gjøre ikke IO, men de bygger opp en handling som vil gjøre IO når den blir eksekvert.
+						</p>
+					</section>
+					<section>
+						<pre><code class="haskell" contenteditable="true">main :: IO ()
+main = do
+  putStrLn "What is your name?"
+  name &lt;- getLine
+  putStrLn ("Nice to meet you, " ++ name ++ "!")</code></pre>
+						<pre class="fragment"><code class="haskell" contenteditable="true">main =
+  putStrLn "What is your name?" &lt;&lt; 
+  getLine &lt;&lt;= \name -&lt;
+  putStrLn ("Nice to meet you, " ++ name ++ "!")</code></pre>
+  					<p>-Wikipedia</p>
+					</section>
+				</section>
+				<section>
+					<h1>∑</h1>
 				</section>
 				<section>
 					<h1>?</h1>
